@@ -10,7 +10,7 @@
   "editor.tabSize": 2,
   "eslint.rules.customizations": [{ "rule": "prettier/*", "severity": "off" }],
   "files.exclude": {
-    "**/.git": false,
+    "**/.git": true,
     "**/node_modules": true
   },
   "search.exclude": {
