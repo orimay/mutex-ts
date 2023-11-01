@@ -1,0 +1,54 @@
+{
+  "name": "mutex-ts",
+  "version": "1.0.0",
+  "description": "This package provides two classes for managing locks: `Mutex` and `MutexRW`. These locks can be used to control access to critical sections in a multi-threaded or asynchronous environment.",
+  "author": "Dmitrii Baranov",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/orimay/mutex-ts.git"
+  },
+  "bugs": {
+    "url": "https://github.com/orimay/mutex-ts/issues"
+  },
+  "keywords": [
+    "mutex",
+    "synchronized",
+    "synchronization",
+    "async",
+    "typescript",
+    "lock",
+    "concurrency"
+  ],
+  "type": "module",
+  "main": "./dist/mutex-ts.umd.cjs",
+  "module": "./dist/mutex-ts.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/mutex-ts.js",
+      "require": "./dist/mutex-ts.umd.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.10",
+    "@typescript-eslint/eslint-plugin": "^6.9.1",
+    "@typescript-eslint/parser": "^6.9.1",
+    "eslint": "^8.52.0",
+    "eslint-config-prettier": "^9.0.0",
+    "prettier": "^3.0.3",
+    "typescript": "^5.0.2",
+    "vite": "^4.4.5",
+    "vite-plugin-dts": "^3.6.3",
+    "vitest": "^0.34.6"
+  }
+}

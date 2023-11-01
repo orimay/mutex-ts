@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "rohit-gohri.format-code-action",
+    "yoavbls.pretty-ts-errors",
+    "vivaxy.vscode-conventional-commits",
+    "gruntfuggly.todo-tree"
+  ],
+  "unwantedRecommendations": ["denoland.vscode-deno"]
+}
