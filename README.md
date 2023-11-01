@@ -104,5 +104,11 @@ runtime based on your application's logic.
 For further details, you can refer to the source code and comments within the
 package.
 
-Feel free to reach out if you have any questions or need assistance with using
-these locks.
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
+for details.
+
+## Authors
+
+- Dmitrii Baranov <dmitrii.a.baranov@gmail.com>
