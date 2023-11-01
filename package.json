@@ -21,13 +21,14 @@
     "concurrency"
   ],
   "type": "module",
-  "main": "./dist/mutex-ts.umd.cjs",
-  "module": "./dist/mutex-ts.js",
-  "types": "./dist/index.d.ts",
+  "main": "./dist/index",
+  "module": "./dist/index",
+  "types": "./dist/index",
   "exports": {
     ".": {
-      "import": "./dist/mutex-ts.js",
-      "require": "./dist/mutex-ts.umd.cjs"
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [

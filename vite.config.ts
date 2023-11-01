@@ -7,9 +7,9 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'mutex-ts',
-      fileName: 'mutex-ts',
+      name: 'index',
+      fileName: 'index',
     },
   },
-  plugins: [dts()],
+  plugins: [dts({ exclude: '**/*.test.ts' })],
 });

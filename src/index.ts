@@ -11,7 +11,7 @@ export class Mutex {
    * Acquire lock
    * @param [bypass=false] option to skip lock acquisition
    */
-  public async obtain(bypass = false) {
+  public async obtain(bypass = false): Promise<() => void> {
     let release = releaseStub;
     if (bypass) return release;
     const lastPromise = this.m_lastPromise;
@@ -36,7 +36,7 @@ export class MutexRW {
   /**
    * Acquire read lock
    */
-  public async obtainRO() {
+  public async obtainRO(): Promise<() => void> {
     while (this.rwAccess) await this.m_lastRWPromise;
     ++this.roAccessCnt;
     let releaseRO = releaseStub;
@@ -54,7 +54,7 @@ export class MutexRW {
   /**
    * Acquire write lock
    */
-  public async obtainRW() {
+  public async obtainRW(): Promise<() => void> {
     let releaseRW = releaseStub;
     const prevRWPromise = this.m_nextRWPromise;
     const thisRWPromise = new Promise<void>(resolve => releaseRW = resolve);

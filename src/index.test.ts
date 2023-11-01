@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { Mutex, MutexRW } from '.';
 
-export const timeout = (ms: number) => new Promise(r => setTimeout(r, ms));
+const timeout = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 describe(
   'mutex',
