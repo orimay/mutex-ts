@@ -1,6 +1,6 @@
 {
   "name": "mutex-ts",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "This package provides two classes for managing locks: `Mutex` and `MutexRW`. These locks can be used to control access to critical sections in a multi-threaded or asynchronous environment.",
   "author": "Dmitrii Baranov <dmitrii.a.baranov@gmail.com>",
   "license": "MIT",
