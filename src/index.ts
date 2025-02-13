@@ -15,9 +15,33 @@ export class Mutex {
     let release = releaseStub;
     if (bypass) return release;
     const lastPromise = this.m_lastPromise;
-    this.m_lastPromise = new Promise<void>(resolve => release = resolve);
+    this.m_lastPromise = new Promise<void>(resolve => (release = resolve));
     await lastPromise;
     return release;
+  }
+
+  /**
+   * Creates a lock object that can be used with the `using` statement.
+   * The `using` statement ensures that the lock is released even if an error occurs within the block.
+   *
+   * @returns An object with a `Symbol.dispose` method that releases the lock when called.
+   *
+   * @example
+   * ```typescript
+   * async function main() {
+   *   const mutex = new Mutex();
+   *   {
+   *     using _ = await mutex.lock();
+   *     // Critical section
+   *     // The lock is automatically released when the block exits
+   *   }
+   * }
+   * ```
+   */
+  public async lock(bypass = false) {
+    return {
+      [Symbol.dispose]: await this.obtain(bypass),
+    };
   }
 }
 
@@ -40,7 +64,7 @@ export class MutexRW {
     while (this.rwAccess) await this.m_lastRWPromise;
     ++this.roAccessCnt;
     let releaseRO = releaseStub;
-    const thisROPromise = new Promise<void>(resolve => releaseRO = resolve);
+    const thisROPromise = new Promise<void>(resolve => (releaseRO = resolve));
     this.m_lastROPromise = Promise.all([thisROPromise, this.m_lastROPromise]);
     thisROPromise.then(() => --this.roAccessCnt);
     // Uncomment to detect deadlocks
@@ -52,18 +76,66 @@ export class MutexRW {
   }
 
   /**
+   * Creates a read lock object that can be used with the `using` statement.
+   * The `using` statement ensures that the lock is released even if an error occurs within the block.
+   *
+   * @returns An object with a `Symbol.dispose` method that releases the lock when called.
+   *
+   * @example
+   * ```typescript
+   * async function main() {
+   *   const mutex = new MutexRW();
+   *   {
+   *     using _ = await mutex.lockRO();
+   *     // Critical section
+   *     // The lock is automatically released when the block exits
+   *   }
+   * }
+   * ```
+   */
+  public async lockRO() {
+    return {
+      [Symbol.dispose]: await this.obtainRO(),
+    };
+  }
+
+  /**
    * Acquire write lock
    */
   public async obtainRW(): Promise<() => void> {
     let releaseRW = releaseStub;
     const prevRWPromise = this.m_nextRWPromise;
-    const thisRWPromise = new Promise<void>(resolve => releaseRW = resolve);
+    const thisRWPromise = new Promise<void>(resolve => (releaseRW = resolve));
     this.m_nextRWPromise = thisRWPromise;
     await prevRWPromise;
     while (this.roAccessCnt) await this.m_lastROPromise;
     this.rwAccess = true;
     this.m_lastRWPromise = thisRWPromise;
-    this.m_lastRWPromise.then(() => this.rwAccess = false);
+    this.m_lastRWPromise.then(() => (this.rwAccess = false));
     return releaseRW;
+  }
+
+  /**
+   * Creates a write lock object that can be used with the `using` statement.
+   * The `using` statement ensures that the lock is released even if an error occurs within the block.
+   *
+   * @returns An object with a `Symbol.dispose` method that releases the lock when called.
+   *
+   * @example
+   * ```typescript
+   * async function main() {
+   *   const mutex = new MutexRW();
+   *   {
+   *     using _ = await mutex.lockRW();
+   *     // Critical section
+   *     // The lock is automatically released when the block exits
+   *   }
+   * }
+   * ```
+   */
+  public async lockRW() {
+    return {
+      [Symbol.dispose]: await this.obtainRW(),
+    };
   }
 }

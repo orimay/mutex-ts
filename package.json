@@ -1,6 +1,6 @@
 {
   "name": "mutex-ts",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "This package provides two classes for managing locks: `Mutex` and `MutexRW`. These locks can be used to control access to critical sections in a multi-threaded or asynchronous environment.",
   "author": "Dmitrii Baranov <dmitrii.a.baranov@gmail.com>",
   "license": "MIT",
@@ -18,7 +18,9 @@
     "async",
     "typescript",
     "lock",
-    "concurrency"
+    "concurrency",
+    "using",
+    "dispose"
   ],
   "type": "module",
   "main": "./dist/index",
@@ -38,12 +40,14 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "release": "changelogen --release --push && pnpm publish"
   },
   "devDependencies": {
     "@types/node": "^20.8.10",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
+    "changelogen": "^0.5.7",
     "eslint": "^8.52.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
